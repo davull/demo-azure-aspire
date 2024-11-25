@@ -1,3 +1,5 @@
+[aspire-samples](https://github.com/dotnet/aspire-samples/tree/main/samples/AspireWithJavaScript)
+
 # Setup
 
 [Azure Aspire Templates](https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/aspire-sdk-templates)
