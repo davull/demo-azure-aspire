@@ -20,6 +20,9 @@ properties:
     registries:
       - server: {{ .Env.AZURE_CONTAINER_REGISTRY_ENDPOINT }}
         identity: {{ .Env.AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID }}
+    secrets:
+      - name: connectionstrings--cache
+        value: cache:6379
   template:
     containers:
       - image: {{ .Image }}
@@ -37,6 +40,8 @@ properties:
             value: "true"
           - name: OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY
             value: in_memory
+          - name: ConnectionStrings__cache
+            secretRef: connectionstrings--cache
     scale:
       minReplicas: 1
 tags:

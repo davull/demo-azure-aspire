@@ -84,7 +84,7 @@ azd down
 azd config set alpha.infraSynth on
 
 # Create bicep file
-azd infra synth
+azd infra synth --force
 ```
 
 ## Pipeline
