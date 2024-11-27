@@ -53,6 +53,8 @@ dotnet run --project .\AspireStarterDemo.AppHost\AspireStarterDemo.AppHost.cspro
 
 [Deploy to Azure](https://learn.microsoft.com/en-us/dotnet/aspire/deployment/azure/aca-deployment)
 
+## azd deploy
+
 ```powershell
 
 # Initialize
@@ -71,6 +73,18 @@ azd deploy
 # Destroy infrastructure
 azd down
 
+```
+
+## azd infra synth
+
+[Generate Bicep from .NET Aspire project model](https://learn.microsoft.com/en-us/dotnet/aspire/deployment/azure/aca-deployment-azd-in-depth?branch=main&tabs=windows#generate-bicep-from-net-aspire-app-model)
+
+```powershell
+# Enable alpha feature
+azd config set alpha.infraSynth on
+
+# Create bicep file
+azd infra synth
 ```
 
 ## Pipeline
