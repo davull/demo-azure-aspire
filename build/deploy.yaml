@@ -1,0 +1,49 @@
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  - name: BuildContainerImage
+    value: davidullrich/azurepipelineagent:node-22
+
+pool:
+  name: Self-hosted
+
+container:
+  image: $(BuildContainerImage)
+
+steps:
+  - checkout: self
+    displayName: Checkout repository
+    clean: "true"
+
+  - task: Bash@3
+    displayName: Install azd
+    inputs:
+      targetType: "inline"
+      script: |
+        curl -fsSL https://aka.ms/install-azd.sh | bash
+
+  - task: UseDotNet@2
+    displayName: Use dotnet 9.x
+    inputs:
+      version: 9.x
+      packageType: sdk
+
+  - task: CmdLine@2
+    displayName: Install powershell
+    inputs:
+      script: dotnet tool install --global PowerShell
+
+  # azd delegate auth to az to use service connection with AzureCLI@2
+  - pwsh: |
+      azd config set auth.useAzCliAuth "true"
+    displayName: Configure AZD to Use AZ CLI Authentication.
+
+  - task: Bash@3
+    displayName: Install .NET Aspire workload
+    inputs:
+      targetType: "inline"
+      script: |
+        dotnet workload install aspire
