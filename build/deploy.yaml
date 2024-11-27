@@ -47,3 +47,20 @@ steps:
       targetType: "inline"
       script: |
         dotnet workload install aspire
+
+  # https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/azure-cli-v2
+  - task: AzureCLI@2
+    displayName: Provision Infrastructure
+    inputs:
+      azureSubscription: azconnection
+      scriptType: bash
+      scriptLocation: inlineScript
+      keepAzSessionActive: true
+      inlineScript: |
+        azd provision --no-prompt
+      workingDirectory: src
+    env:
+      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+      AZURE_ENV_NAME: $(AZURE_ENV_NAME)
+      AZURE_LOCATION: $(AZURE_LOCATION)
+      AZD_INITIAL_ENVIRONMENT_CONFIG: $(AZD_INITIAL_ENVIRONMENT_CONFIG)
