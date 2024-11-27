@@ -93,9 +93,6 @@ azd infra synth --force
 - [Install azd](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.azd)
 
 ```powershell
-
 azd pipeline config
-
 azd pipeline config --provider azdo
-
 ```

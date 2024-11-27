@@ -64,3 +64,18 @@ steps:
       AZURE_ENV_NAME: $(AZURE_ENV_NAME)
       AZURE_LOCATION: $(AZURE_LOCATION)
       AZD_INITIAL_ENVIRONMENT_CONFIG: $(AZD_INITIAL_ENVIRONMENT_CONFIG)
+
+  - task: AzureCLI@2
+    displayName: Deploy Application
+    inputs:
+      azureSubscription: azconnection
+      scriptType: bash
+      scriptLocation: inlineScript
+      keepAzSessionActive: true
+      inlineScript: |
+        azd deploy --no-prompt
+      workingDirectory: src
+    env:
+      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+      AZURE_ENV_NAME: $(AZURE_ENV_NAME)
+      AZURE_LOCATION: $(AZURE_LOCATION)
