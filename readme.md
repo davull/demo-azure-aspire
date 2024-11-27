@@ -89,8 +89,10 @@ azd infra synth --force
 
 ## Pipeline
 
-[Azure Pipeline](https://github.com/Azure-Samples/azd-starter-bicep/blob/main/.azdo/pipelines/azure-dev.yml)
+- [Azure Pipeline](https://github.com/Azure-Samples/azd-starter-bicep/blob/main/.azdo/pipelines/azure-dev.yml)
+- [Install azd](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.azd)
 
 ```powershell
 azd pipeline config
+azd pipeline config --provider azdo
 ```
