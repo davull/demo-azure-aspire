@@ -1,4 +1,6 @@
-[aspire-samples](https://github.com/dotnet/aspire-samples/tree/main/samples/AspireWithJavaScript)
+- [Azure Aspire](https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview)
+- [aspire-samples](https://github.com/dotnet/aspire-samples/tree/main/samples/AspireWithJavaScript)
+- [Integrations](https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/integrations-overview)
 
 # Setup
 
@@ -56,7 +58,6 @@ dotnet run --project .\AspireStarterDemo.AppHost\AspireStarterDemo.AppHost.cspro
 ## azd deploy
 
 ```powershell
-
 # Initialize
 azd init
 > Use code in the current directory
@@ -72,7 +73,6 @@ azd deploy
 
 # Destroy infrastructure
 azd down
-
 ```
 
 ## azd infra synth
