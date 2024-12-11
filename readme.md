@@ -87,6 +87,16 @@ azd config set alpha.infraSynth on
 azd infra synth --force
 ```
 
+## Deployment manifest
+
+https://learn.microsoft.com/en-us/dotnet/aspire/deployment/manifest-format
+
+```powershell
+dotnet run --project .\AspireStarterDemo.AppHost\AspireStarterDemo.AppHost.csproj `
+    --publisher manifest `
+    --output-path aspire-manifest.json
+```
+
 ## Pipeline
 
 - [Azure Pipeline](https://github.com/Azure-Samples/azd-starter-bicep/blob/main/.azdo/pipelines/azure-dev.yml)
