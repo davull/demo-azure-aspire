@@ -1,3 +1,6 @@
+using AspireStarterDemo.DataService;
+using Npgsql;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -5,7 +8,7 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddOpenApi();
 
-// TODO: Add postgres client
+builder.AddNpgsqlDataSource(connectionName: "postgresdb");
 
 var app = builder.Build();
 
@@ -17,18 +20,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/weatherforecast", async (NpgsqlDataSource dataSource) =>
     {
-        string[] summaries =
-        [
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild",
-            "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        ];
+        var summary = await Repository.GetSummary(dataSource);
 
         var forecast = new WeatherForecast(
             DateOnly.FromDateTime(DateTime.Now.AddDays(Random.Shared.Next(0, 10))),
             Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]);
+            summary);
         return Results.Json(forecast);
     })
     .WithName("GetWeatherForecast");
