@@ -5,8 +5,14 @@ var builder = DistributedApplication.CreateBuilder(args);
 var cache = builder.AddRedis("cache")
     .WithRedisCommander();
 
+// TODO: Add Postgres
+
+var dataService = builder.AddProject<Projects.AspireStarterDemo_DataService>("dataservice");
+
 var apiService = builder.AddProject<Projects.AspireStarterDemo_ApiService>("apiservice")
-    .WithReference(cache);
+    .WithReference(cache)
+    .WithReference(dataService)
+    .WaitFor(dataService);
 
 builder.AddProject<Projects.AspireStarterDemo_Web>("webfrontend")
     .WithExternalHttpEndpoints()
