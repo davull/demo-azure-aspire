@@ -1,4 +1,5 @@
 using System.Text.Json;
+using AspireStarterDemo.ApiService;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,11 @@ builder.Services.AddOpenApi();
 // https://learn.microsoft.com/en-us/dotnet/aspire/caching/stackexchange-redis-integration#client-integration
 builder.AddRedisClient(connectionName: "cache");
 
+builder.Services.AddHttpClient<DataServiceApiClient>(client =>
+{
+    client.BaseAddress = new("https+http://dataservice");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,18 +32,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-string[] summaries =
-    ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
-
-app.MapGet("/weatherforecast", async (IConnectionMultiplexer redis) =>
+app.MapGet("/weatherforecast", async (IConnectionMultiplexer redis, DataServiceApiClient client) =>
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-            new WeatherForecast
-            (
-                DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                Random.Shared.Next(-20, 55),
-                summaries[Random.Shared.Next(summaries.Length)]
-            )).ToArray();
+        const int count = 3;
+        var forecast = new List<WeatherForecast>();
+        for (var i = 0; i < count; i++)
+        {
+            forecast.Add(await client.GetWeatherAsync());
+        }
 
         var db = redis.GetDatabase();
 
@@ -52,8 +54,3 @@ app.MapGet("/weatherforecast", async (IConnectionMultiplexer redis) =>
 app.MapDefaultEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
