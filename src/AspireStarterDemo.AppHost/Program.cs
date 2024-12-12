@@ -25,4 +25,10 @@ builder.AddProject<Projects.AspireStarterDemo_Web>("webfrontend")
     .WithExternalHttpEndpoints()
     .WithReference(apiService);
 
+builder.AddNpmApp("angular", "../AspireStarterDemo.WebAngular")
+    .WithReference(apiService)
+    .WithHttpEndpoint(env: "PORT")
+    .WithExternalHttpEndpoints()
+    .PublishAsDockerFile();
+
 builder.Build().Run();
