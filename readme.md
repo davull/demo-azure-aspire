@@ -51,6 +51,15 @@ dotnet build .\AspireStarterDemo.sln
 dotnet run --project .\AspireStarterDemo.AppHost\AspireStarterDemo.AppHost.csproj
 ```
 
+Build angular project
+
+```powershell
+cd src\AspireStarterDemo.WebAngular
+
+npm install
+npm run build
+```
+
 # Deploy
 
 [Deploy to Azure](https://learn.microsoft.com/en-us/dotnet/aspire/deployment/azure/aca-deployment)
