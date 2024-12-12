@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/weatherforecast", async (IConnectionMultiplexer redis, DataServiceApiClient client) =>
     {
-        const int count = 3;
+        const int count = 10;
         var forecast = new List<WeatherForecast>();
         for (var i = 0; i < count; i++)
         {
